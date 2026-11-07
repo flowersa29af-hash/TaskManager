@@ -36,6 +36,7 @@ function loadTask(){
         {
             type: "get", //HTTP verb Read
             url: serverName,
+            dataType: "json",
             success: function(data)
             {
                 console.log(data);
