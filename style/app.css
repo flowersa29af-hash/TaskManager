@@ -31,8 +31,23 @@ body {
   padding: var(--space-lg);
   font-family: var(--font-body);
   background-color: var(--color-background);
+  /* Faint graph-paper grid, like a planner page */
+  background-image:
+    linear-gradient(rgba(26, 35, 126, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26, 35, 126, 0.06) 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-attachment: fixed;
+  min-height: 100vh;
   color: var(--color-text);
   line-height: 1.6;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-image:
+      linear-gradient(rgba(184, 194, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(184, 194, 255, 0.05) 1px, transparent 1px);
+  }
 }
 
 /* ---- Header ---- */
