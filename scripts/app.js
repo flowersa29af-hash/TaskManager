@@ -115,7 +115,6 @@ function displayTask(task) {
         <label>Due: ${task.date}</label>
         <label>Budget: $${task.budget}</label>
       </div>
-      <button class="btn-edit">Edit</button>
       <button class="btn-delete">Delete</button>
     </div>`;
 
