@@ -110,6 +110,7 @@ input, select {
   font-size: 1rem;
   font-family: inherit;
   color: var(--color-text);
+  background-color: var(--color-surface);
 }
 
 input:focus, select:focus {
