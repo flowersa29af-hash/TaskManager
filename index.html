@@ -36,11 +36,20 @@
           </label>
           <label>Budget <input id="numBudget" type="number" step="0.01" placeholder="100.00" /></label>
         </div>
+        <p id="errorMsg" class="error"></p>
         <button type="button" id="btnSave">Save Task</button>
       </form>
     </section>
     <section class="card">
       <h2>Task List</h2>
+      <label class="filter">Show:
+        <select id="selFilter">
+          <option value="All">All</option>
+          <option value="New">New</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
+        </select>
+      </label>
       <div id="list" class="list"></div>
     </section>
   </main>

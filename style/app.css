@@ -193,6 +193,22 @@ button:hover {
   color: var(--color-text-muted);
 }
 
+/* ---- Error message (Feature 1) ---- */
+.error {
+  color: var(--color-primary);
+  margin: 0 0 var(--space-sm);
+  min-height: 1.2em;
+}
+
+/* ---- Status filter (Feature 2) ---- */
+.filter {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+  max-width: 250px;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --color-background: #14161a;

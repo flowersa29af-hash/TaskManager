@@ -7,6 +7,14 @@ function saveTask(){
     const status = $("#selStatus").val();
     const budget = $("#numBudget").val();
     const priority = $("#selPriority").val();
+
+    // stop if the title is empty
+    if (title.trim() === "") {
+        $("#errorMsg").text("Please enter a title.");
+        return; // leave the function, don't save
+    }
+    $("#errorMsg").text(""); // clear any old error
+
     // create an Object using  our class
 
     const taskToSave = new Task(title, desc, color, date, status, budget, priority);
@@ -19,9 +27,8 @@ function saveTask(){
         contentType: "application/json",
         success: function(response) {
             console.log(response);
+            clearForm();
             loadTask();
-            //displayTask(taskToSave);
-            
         },
         error: function(fail) {
             console.log(fail);
@@ -31,7 +38,14 @@ function saveTask(){
 
 }
 
+// puts every input in the form back to its starting value
+function clearForm() {
+    $("#taskForm")[0].reset();
+}
+
 const serverName="https://106api-b0bnggbsgnezbzcz.westus3-01.azurewebsites.net/api/tasks";
+
+let allTasks = []; // every task we got from the server
 
 function updateTask(){
   $.ajax({
@@ -60,8 +74,8 @@ function loadTask(){
             success: function(data)
             {
                 console.log(data);
-                $(".list").empty();
-                data.forEach(displayTask);
+                allTasks = data;  // save them
+                renderList();     // draw them (with the filter applied)
             },
             error: function(fail)
             {
@@ -70,6 +84,23 @@ function loadTask(){
         }
     )
 }
+
+// shows only the tasks that match the filter dropdown
+function renderList() {
+    const filter = $("#selFilter").val();
+    let shown = allTasks;
+
+    if (filter !== "All") {
+        // keep only tasks whose status matches the dropdown
+        shown = allTasks.filter(function(task) {
+            return task.status === filter;
+        });
+    }
+
+    $(".list").empty();
+    shown.forEach(displayTask);
+}
+
 function displayTask(task) {
   // Template literal using backticks
   let html = `
@@ -93,6 +124,10 @@ function displayTask(task) {
 }
 
 function deleteTask(id) {
+  // ask first - if the user clicks "Cancel", stop here
+  if (!confirm("Are you sure you want to delete this task?")) {
+    return;
+  }
   console.log("Deleting task with ID:", id);
   $.ajax(
     {
@@ -119,6 +154,8 @@ function deleteTask(id) {
             const id = $(this).closest(".task").attr("id");
             deleteTask(id);
         });
+        // redraw the list when the filter dropdown changes
+        $("#selFilter").on("change", renderList);
         // load data from the server
         loadTask()
     }
